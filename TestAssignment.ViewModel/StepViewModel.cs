@@ -4,7 +4,7 @@ namespace TestAssignment.ViewModel
 {
 	public class StepViewModel
 	{
-		public static readonly double SpeedFactor = 1;
+		public static readonly double SpeedFactor = 0.02;
 
 		public StepViewModel(PointViewModel destination, double distance)
 		{

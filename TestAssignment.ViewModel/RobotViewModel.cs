@@ -9,10 +9,11 @@ namespace TestAssignment.ViewModel
 	{
 		public RobotViewModel(Point initialCoordinates)
 		{
-			InitialCoordinates = initialCoordinates;
+			InitialCoordinates = new PointViewModel(initialCoordinates);
+			CurrentStep = new StepViewModel(InitialCoordinates, 0);
 		}
 
-		public Point InitialCoordinates { get; }
+		public PointViewModel InitialCoordinates { get; }
 
 		public bool IsActive
 		{
@@ -52,7 +53,8 @@ namespace TestAssignment.ViewModel
 				var start = points[i];
 				var destination = points[i + 1];
 				var distance = distanceComputer.GetDistance(start, destination);
-				var destinationVm = pointVMs.First(point => Equals(point.Point, destination));
+				var destinationVm = pointVMs.FirstOrDefault(point => Equals(point.Point, destination)) ??
+				                    InitialCoordinates;
 
 				yield return new StepViewModel(destinationVm, distance);
 			}

@@ -4,6 +4,7 @@
         xmlns:converters="clr-namespace:TestAssignment.Converters"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:TestAssignment.ViewModel;assembly=TestAssignment.ViewModel"
+        xmlns:testAssignment="clr-namespace:TestAssignment"
         x:Name="Window"
         Width="1000" Height="700">
     <Window.Resources>
@@ -95,7 +96,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate DataType="viewModel:PointViewModel">
-                    <Ellipse Height="10" Width="10" Fill="BlueViolet" />
+                    <Ellipse Height="10" Width="10" Stroke="Black" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -104,40 +105,98 @@
                 Width="{DynamicResource FieldWidth}" 
                 Background="Transparent"
                 VerticalAlignment="Center">
-            <Path Width="30" Height="30"
-                  Fill="DarkBlue"
-                  Stretch="Uniform"
-                  Data="{DynamicResource RobotGeometry}">
+            <testAssignment:Robot Width="30" Height="30"
+                                  x:Name="robot0"
+                                  IsActive="{Binding Robots[0].IsActive}">
                 <Canvas.Left>
                     <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
-                        <Binding Path="Robots[0].InitialCoordinates.X"/>
+                        <Binding Path="Robots[0].InitialCoordinates.Point.X"/>
                         <Binding RelativeSource="{RelativeSource Self}"/>
                     </MultiBinding>
                 </Canvas.Left>
                 <Canvas.Bottom>
                     <MultiBinding Converter="{StaticResource FieldYCoordinatesConverter}">
-                        <Binding Path="Robots[0].InitialCoordinates.Y"/>
+                        <Binding Path="Robots[0].InitialCoordinates.Point.Y"/>
                         <Binding RelativeSource="{RelativeSource Self}"/>
                     </MultiBinding>
                 </Canvas.Bottom>
-            </Path>
-            <Path Width="30" Height="30"
-                  Fill="DarkRed"
-                  Stretch="Uniform"
-                  Data="{DynamicResource RobotGeometry}">
+                <Path Fill="Blue"
+                      Stretch="Uniform"
+                      Data="{DynamicResource RobotGeometry}">
+                </Path>
+                <testAssignment:Robot.Triggers>
+                    <EventTrigger RoutedEvent="testAssignment:Robot.Moving">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Canvas.Left)"
+                                                 Duration="{Binding Path=DataContext.Robots[0].CurrentStep.Duration, ElementName=robot0, Converter={converters:TimeSpanToDurationConverter}}">
+                                    <DoubleAnimation.To>
+                                        <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
+                                            <Binding Path="DataContext.Robots[0].CurrentStep.Destination.Point.X" ElementName="robot0"/>
+                                            <Binding ElementName="robot0"/>
+                                        </MultiBinding>
+                                    </DoubleAnimation.To>
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetProperty="(Canvas.Bottom)"
+                                                 Duration="{Binding Path=DataContext.Robots[0].CurrentStep.Duration, ElementName=robot0, Converter={converters:TimeSpanToDurationConverter}}">
+                                    <DoubleAnimation.To>
+                                        <MultiBinding Converter="{StaticResource FieldYCoordinatesConverter}">
+                                            <Binding Path="DataContext.Robots[0].CurrentStep.Destination.Point.Y" ElementName="robot0"/>
+                                            <Binding ElementName="robot0"/>
+                                        </MultiBinding>
+                                    </DoubleAnimation.To>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </testAssignment:Robot.Triggers>
+            </testAssignment:Robot>
+            <testAssignment:Robot Width="30" Height="30"
+                                  x:Name="robot1"
+                                  IsActive="{Binding Robots[1].IsActive}">
                 <Canvas.Left>
                     <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
-                        <Binding Path="Robots[1].InitialCoordinates.X"/>
+                        <Binding Path="Robots[1].InitialCoordinates.Point.X"/>
                         <Binding RelativeSource="{RelativeSource Self}"/>
                     </MultiBinding>
                 </Canvas.Left>
                 <Canvas.Bottom>
                     <MultiBinding Converter="{StaticResource FieldYCoordinatesConverter}">
-                        <Binding Path="Robots[1].InitialCoordinates.Y"/>
+                        <Binding Path="Robots[1].InitialCoordinates.Point.Y"/>
                         <Binding RelativeSource="{RelativeSource Self}"/>
                     </MultiBinding>
                 </Canvas.Bottom>
-            </Path>
+                <Path Fill="Red"
+                      Stretch="Uniform"
+                      Data="{DynamicResource RobotGeometry}">
+                </Path>
+                <testAssignment:Robot.Triggers>
+                    <EventTrigger RoutedEvent="testAssignment:Robot.Moving">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(Canvas.Left)"
+                                                 Duration="{Binding Path=DataContext.Robots[1].CurrentStep.Duration, ElementName=robot1, Converter={converters:TimeSpanToDurationConverter}}">
+                                    <DoubleAnimation.To>
+                                        <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
+                                            <Binding Path="DataContext.Robots[1].CurrentStep.Destination.Point.X" ElementName="robot1"/>
+                                            <Binding ElementName="robot1"/>
+                                        </MultiBinding>
+                                    </DoubleAnimation.To>
+                                </DoubleAnimation>
+                                <DoubleAnimation Storyboard.TargetProperty="(Canvas.Bottom)"
+                                                 Duration="{Binding Path=DataContext.Robots[1].CurrentStep.Duration, ElementName=robot1, Converter={converters:TimeSpanToDurationConverter}}">
+                                    <DoubleAnimation.To>
+                                        <MultiBinding Converter="{StaticResource FieldYCoordinatesConverter}">
+                                            <Binding Path="DataContext.Robots[1].CurrentStep.Destination.Point.Y" ElementName="robot1"/>
+                                            <Binding ElementName="robot1"/>
+                                        </MultiBinding>
+                                    </DoubleAnimation.To>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </testAssignment:Robot.Triggers>
+            </testAssignment:Robot>
         </Canvas>
         <Control Grid.Column="1"
                  Margin="5"

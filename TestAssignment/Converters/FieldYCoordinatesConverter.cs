@@ -32,7 +32,7 @@ namespace TestAssignment.Converters
 
 			var yFactor = Equals(AxesYValueRange, 0d)? 0: FieldHeight / AxesYValueRange;
 
-			return y * yFactor - element.Height / 2;
+			return y * yFactor - element.ActualHeight / 2;
 		}
 
 		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
