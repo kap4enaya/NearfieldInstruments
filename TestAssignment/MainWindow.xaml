@@ -4,17 +4,37 @@
         xmlns:converters="clr-namespace:TestAssignment.Converters"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:TestAssignment.ViewModel;assembly=TestAssignment.ViewModel"
-        x:Name="window"
+        x:Name="Window"
         Width="1000" Height="700">
     <Window.Resources>
+        <Geometry x:Key="RobotGeometry">M14.699999,24.599991C14.199999,24.599991,13.699999,25,13.699999,25.599991L13.699999,28.899994C13.699999,29.5,14.199999,29.899994,14.699999,29.899994L15.500002,29.899994C16.000001,29.899994,16.500001,29.5,16.500001,28.899994L16.500001,25.599991C16.500001,25,16.000001,24.599991,15.500002,24.599991z M10.500001,24.599991C10.000001,24.599991,9.500001,25,9.500001,25.599991L9.500001,28.899994C9.500001,29.5,10.000001,29.899994,10.500001,29.899994L11.300004,29.899994C11.800004,29.899994,12.300004,29.5,12.300004,28.899994L12.300004,25.599991C12.300004,25,11.90001,24.599991,11.300004,24.599991z M22.2,21.799988L25.7,21.799988 25.7,32 22.2,32z M0,21.799988L3.5000005,21.799988 3.5000005,32 0,32z M5.6999975,21.699997L20.100009,21.699997 20.100009,32 5.6999975,32z M10.500001,16.5L10.500001,17.599991 15.000002,17.599991 15.000002,16.5z M16.900012,11.199997C15.800005,11.199997 15.000002,12.099991 15.000002,13.099991 15.000002,14.199997 15.900011,15 16.900012,15 18.000003,15 18.800006,14.099991 18.800006,13.099991 18.900012,12.099991 18.000003,11.199997 16.900012,11.199997z M8.6999979,11.199997C7.6000071,11.199997 6.800004,12.099991 6.800004,13.099991 6.800004,14.199997 7.6999979,15 8.6999979,15 9.800004,15 10.600007,14.099991 10.600007,13.099991 10.600007,12.099991 9.6999979,11.199997 8.6999979,11.199997z M12.900011,0C13.800005,0 14.500002,0.69999695 14.500002,1.5999908 14.500002,2.2999878 14.100008,2.7999878 13.500002,3.0999908L13.400011,3.1999969 13.400011,7.1999969 21.7,7.1999969 21.7,11 21.900012,11C22.400012,11 22.900012,11.899994 22.900012,13 22.900012,14.099991 22.500003,15 21.900012,15L21.7,15 21.7,19.699997 4.0000005,19.699997 4.0000005,15 3.6999975,15C3.1999972,15 2.6999972,14.099991 2.6999975,13 2.6999972,11.899994 3.1000064,11 3.6999975,11 3.8000036,11 3.9000097,11 4.0000005,11.099991L4.0000005,7.0999908 12.300004,7.0999908 12.300004,3.0999908C11.699998,2.8999939 11.300004,2.2999878 11.300004,1.5999908 11.300004,0.69999695 12.000001,0 12.900011,0z</Geometry>
         <system:Double x:Key="FieldHeight">600</system:Double>
         <system:Double x:Key="FieldWidth">600</system:Double>
         <converters:FieldXCoordinatesConverter x:Key="FieldXCoordinatesConverter"
-                                              FieldWidth="{StaticResource FieldWidth}"
-                                              AxesXValueRange="{Binding Path=DataContext.ValueRange.X, Source={x:Reference Name=window}}"/>
+                                               FieldWidth="{StaticResource FieldWidth}"
+                                               AxesXValueRange="{Binding Path=DataContext.ValueRange.X, Source={x:Reference Name=Window}}"/>
         <converters:FieldYCoordinatesConverter x:Key="FieldYCoordinatesConverter"
                                                FieldHeight="{StaticResource FieldHeight}"
-                                               AxesYValueRange="{Binding Path=DataContext.ValueRange.Y, Source={x:Reference Name=window}}"/>
+                                               AxesYValueRange="{Binding Path=DataContext.ValueRange.Y, Source={x:Reference Name=Window}}"/>
+        <ControlTemplate x:Key="StartButtonTemplate">
+            <Button x:Name="startButton"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Command="{Binding StartCommand}"
+                    Background="Transparent"
+                    BorderThickness="0">
+                <Path x:Name="playPath"
+                      Fill="DarkGreen"
+                      Height="20" Width="20"
+                      Stretch="Uniform"
+                      Data="M0,0L25.194,16 0,32z"/>
+            </Button>
+            <ControlTemplate.Triggers>
+                <Trigger SourceName="startButton" Property="IsEnabled" Value="False">
+                    <Setter TargetName="playPath" Property="Fill" Value="DimGray"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -26,7 +46,14 @@
                         VerticalAlignment="Top">
                 <TextBox Width="80" Margin="5" Text="{Binding NewPointX}"/>
                 <TextBox Width="80" Margin="5" Text="{Binding NewPointY}"/>
-                <Button Margin="5" Command="{Binding AddCommand}">Add</Button>
+                <Button Margin="5" Command="{Binding AddCommand}"
+                        Background="Transparent"
+                        BorderThickness="0">
+                    <Path Fill="Black"
+                          Height="20" Width="20"
+                          Stretch="Uniform"
+                          Data="M12.126984,0L19.872009,0 19.872009,12.128 32,12.128 32,19.872999 19.872009,19.872999 19.872009,31.999 12.126984,31.999 12.126984,19.872999 0,19.872999 0,12.128 12.126984,12.128z"></Path>
+                </Button>
             </StackPanel>
         </Grid>
         <ListView Grid.Column="1"
@@ -77,9 +104,10 @@
                 Width="{DynamicResource FieldWidth}" 
                 Background="Transparent"
                 VerticalAlignment="Center">
-            <Image x:Name="robot1"
-                       Width="20" Height="20" 
-                       Source="Images/robot.png">
+            <Path Width="30" Height="30"
+                  Fill="DarkBlue"
+                  Stretch="Uniform"
+                  Data="{DynamicResource RobotGeometry}">
                 <Canvas.Left>
                     <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
                         <Binding Path="Robots[0].InitialCoordinates.X"/>
@@ -92,10 +120,11 @@
                         <Binding RelativeSource="{RelativeSource Self}"/>
                     </MultiBinding>
                 </Canvas.Bottom>
-            </Image>
-            <Image x:Name="robot2"
-                       Width="20" Height="20" 
-                       Source="Images/robot.png">
+            </Path>
+            <Path Width="30" Height="30"
+                  Fill="DarkRed"
+                  Stretch="Uniform"
+                  Data="{DynamicResource RobotGeometry}">
                 <Canvas.Left>
                     <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
                         <Binding Path="Robots[1].InitialCoordinates.X"/>
@@ -108,13 +137,10 @@
                         <Binding RelativeSource="{RelativeSource Self}"/>
                     </MultiBinding>
                 </Canvas.Bottom>
-            </Image>
+            </Path>
         </Canvas>
-        <Button Grid.Column="1"
-                Margin="5"
-                Width="80"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Command="{Binding StartCommand}">Start</Button>
+        <Control Grid.Column="1"
+                 Margin="5"
+                 Template="{DynamicResource StartButtonTemplate}"/>
     </Grid>
 </Window>
