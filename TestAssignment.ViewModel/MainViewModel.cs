@@ -15,12 +15,17 @@ namespace TestAssignment.ViewModel
 			_applicationModel = applicationModel;
 
 			Points = new ObservableCollection<PointViewModel>();
-			Robots = applicationModel.GetRobots().Select(robot => new RobotViewModel()).ToList();
+			Robots = applicationModel.GetRobots().Select(coordinates => new RobotViewModel(coordinates)).ToList();
+			ValueRange = new Point(
+				applicationModel.MaxPoint.X - applicationModel.MinPoint.X,
+				applicationModel.MaxPoint.Y - applicationModel.MinPoint.Y);
 		}
 
 		public IReadOnlyList<RobotViewModel> Robots { get; }
 
 		public ObservableCollection<PointViewModel> Points { get; }
+
+		public Point ValueRange { get; }
 
 		public double NewPointX
 		{

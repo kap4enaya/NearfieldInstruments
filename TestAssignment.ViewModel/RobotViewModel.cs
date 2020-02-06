@@ -7,6 +7,13 @@ namespace TestAssignment.ViewModel
 {
 	public class RobotViewModel: NotifyPropertyChanged
 	{
+		public RobotViewModel(Point initialCoordinates)
+		{
+			InitialCoordinates = initialCoordinates;
+		}
+
+		public Point InitialCoordinates { get; }
+
 		public bool IsActive
 		{
 			get => _isActive;
@@ -16,7 +23,6 @@ namespace TestAssignment.ViewModel
 				CallPropertyChanged();//we want to call it every time regardless of whether it's changed or not
 			}
 		}
-
 		private bool _isActive;
 
 		public StepViewModel CurrentStep
