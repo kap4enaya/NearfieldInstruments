@@ -15,17 +15,6 @@ namespace TestAssignment.ViewModel
 
 		public PointViewModel InitialCoordinates { get; }
 
-		public bool IsActive
-		{
-			get => _isActive;
-			private set
-			{
-				_isActive = value;
-				CallPropertyChanged();//we want to call it every time regardless of whether it's changed or not
-			}
-		}
-		private bool _isActive;
-
 		public StepViewModel CurrentStep
 		{
 			get =>_currentStep;
@@ -38,7 +27,6 @@ namespace TestAssignment.ViewModel
 			foreach (var step in CreateSteps(path, pointVMs))
 			{
 				CurrentStep = step;
-				IsActive = true;
 				await Task.Delay(CurrentStep.Duration);
 				CurrentStep.Destination.Visited = true;
 			}

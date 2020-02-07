@@ -17,13 +17,13 @@ namespace TestAssignment
 {
 	public class Robot : ContentControl
 	{
-		public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register(
-			nameof(IsActive), typeof(bool), typeof(Robot), new PropertyMetadata(false, IsActiveChanged));
+		public static readonly DependencyProperty TargetProperty = DependencyProperty.Register(
+			nameof(Target), typeof(object), typeof(Robot), new PropertyMetadata(false, TargetChanged));
 
-		public bool IsActive
+		public object Target
 		{
-			get => (bool)GetValue(IsActiveProperty);
-			set => SetValue(IsActiveProperty, value);
+			get => GetValue(TargetProperty);
+			set => SetValue(TargetProperty, value);
 		}
 
 		public static readonly RoutedEvent MovingEvent = EventManager.RegisterRoutedEvent(
@@ -41,7 +41,7 @@ namespace TestAssignment
 			RaiseEvent(newEventArgs);
 		}
 
-		private static void IsActiveChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		private static void TargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			((Robot)d).RaiseMovingEvent();
 		}

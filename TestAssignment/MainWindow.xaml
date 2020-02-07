@@ -107,7 +107,7 @@
                 VerticalAlignment="Center">
             <testAssignment:Robot Width="30" Height="30"
                                   x:Name="robot0"
-                                  IsActive="{Binding Robots[0].IsActive}">
+                                  Target="{Binding Robots[0].CurrentStep}">
                 <Canvas.Left>
                     <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
                         <Binding Path="Robots[0].InitialCoordinates.Point.X"/>
@@ -153,7 +153,7 @@
             </testAssignment:Robot>
             <testAssignment:Robot Width="30" Height="30"
                                   x:Name="robot1"
-                                  IsActive="{Binding Robots[1].IsActive}">
+                                  Target="{Binding Robots[1].CurrentStep}">
                 <Canvas.Left>
                     <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
                         <Binding Path="Robots[1].InitialCoordinates.Point.X"/>
