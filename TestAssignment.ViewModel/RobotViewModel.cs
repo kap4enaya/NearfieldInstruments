@@ -28,7 +28,7 @@ namespace TestAssignment.ViewModel
 			{
 				CurrentStep = step;
 				await Task.Delay(CurrentStep.Duration);
-				CurrentStep.Destination.Visited = true;
+				CurrentStep.Destination.Visit(this);
 			}
 		}
 

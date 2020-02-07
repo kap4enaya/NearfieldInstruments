@@ -2,7 +2,7 @@
 
 namespace TestAssignment.ViewModel
 {
-	public class PointViewModel
+	public class PointViewModel: NotifyPropertyChanged
 	{
 		public PointViewModel(Point point)
 		{
@@ -11,6 +11,24 @@ namespace TestAssignment.ViewModel
 
 		public Point Point { get; }
 
-		public bool Visited { get; set; }
+		public bool Visited
+		{
+			get => _visited;
+			private set => SetProperty(ref _visited, value);
+		}
+		private bool _visited;
+
+		public RobotViewModel VisitingRobot
+		{
+			get => _visitingRobot;
+			private set => SetProperty(ref _visitingRobot, value);
+		}
+		private RobotViewModel _visitingRobot;
+
+		public void Visit(RobotViewModel visitingRobot)
+		{
+			VisitingRobot = visitingRobot;
+			Visited = true;
+		}
 	}
 }

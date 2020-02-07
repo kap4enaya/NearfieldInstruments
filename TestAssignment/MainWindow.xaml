@@ -96,17 +96,33 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate DataType="viewModel:PointViewModel">
-                    <Ellipse Height="10" Width="10" Stroke="Black" />
+                    <Ellipse x:Name="pointEllipse" Height="10" Width="10" Stroke="Black" />
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Visited}" Value="True">
+                            <Setter TargetName="pointEllipse" Property="Fill">
+                                <Setter.Value>
+                                    <MultiBinding Converter="{converters:RobotToColorConverter}">
+                                        <Binding Path="VisitingRobot"/>
+                                        <Binding ElementName="robotsCanvas"/>
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Canvas Grid.Column="1" HorizontalAlignment="Center"
+        <Canvas Grid.Column="1"
+                x:Name="robotsCanvas"
+                HorizontalAlignment="Center"
                 Height="{DynamicResource FieldHeight}" 
                 Width="{DynamicResource FieldWidth}" 
                 Background="Transparent"
                 VerticalAlignment="Center">
             <testAssignment:Robot Width="30" Height="30"
                                   x:Name="robot0"
+                                  Foreground="Blue"
+                                  Tag="{Binding Robots[0]}"
                                   Target="{Binding Robots[0].CurrentStep}">
                 <Canvas.Left>
                     <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
@@ -120,7 +136,7 @@
                         <Binding RelativeSource="{RelativeSource Self}"/>
                     </MultiBinding>
                 </Canvas.Bottom>
-                <Path Fill="Blue"
+                <Path Fill="{Binding ElementName=robot0, Path=Foreground}"
                       Stretch="Uniform"
                       Data="{DynamicResource RobotGeometry}">
                 </Path>
@@ -153,6 +169,8 @@
             </testAssignment:Robot>
             <testAssignment:Robot Width="30" Height="30"
                                   x:Name="robot1"
+                                  Foreground="Red"
+                                  Tag="{Binding Robots[1]}"
                                   Target="{Binding Robots[1].CurrentStep}">
                 <Canvas.Left>
                     <MultiBinding Converter="{StaticResource FieldXCoordinatesConverter}">
@@ -166,7 +184,7 @@
                         <Binding RelativeSource="{RelativeSource Self}"/>
                     </MultiBinding>
                 </Canvas.Bottom>
-                <Path Fill="Red"
+                <Path Fill="{Binding ElementName=robot1, Path=Foreground}"
                       Stretch="Uniform"
                       Data="{DynamicResource RobotGeometry}">
                 </Path>

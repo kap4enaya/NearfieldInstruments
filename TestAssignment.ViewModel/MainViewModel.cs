@@ -66,10 +66,12 @@ namespace TestAssignment.ViewModel
 
 		private async void Start()
 		{
+			StartCommand.IsActive = true;
 			StartCommand.RaiseCanExecuteChanged();
 
 			await Task.WhenAll(GetSimulationTasks().ToArray());
 
+			StartCommand.IsActive = false;
 			StartCommand.RaiseCanExecuteChanged();
 		}
 

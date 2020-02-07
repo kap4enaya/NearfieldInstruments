@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\RobotToColorConverter.cs" />
     <Compile Include="Converters\TimeSpanToDurationConverter.cs" />
     <Compile Include="Robot.cs" />
     <Page Include="MainWindow.xaml">
