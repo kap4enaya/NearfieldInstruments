@@ -32,7 +32,7 @@ namespace TestAssignment.Converters
 
 			var xFactor = Equals(AxesXValueRange, 0d) ? 0 : FieldWidth / AxesXValueRange;
 
-			return x * xFactor - element.ActualWidth / 2;
+			return x * xFactor - element.Width / 2;
 		}
 
 		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

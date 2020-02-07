@@ -28,6 +28,10 @@ namespace TestAssignment.ViewModel
 
 		public Point ValueRange { get; }
 
+		public Point MinPoint => _applicationModel.MinPoint;
+
+		public Point MaxPoint => _applicationModel.MaxPoint;
+
 		public double NewPointX
 		{
 			get => _newPointX;
