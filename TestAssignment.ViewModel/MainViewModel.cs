@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Prism.Commands;
 using TestAssignment.Core;
 
@@ -67,13 +68,18 @@ namespace TestAssignment.ViewModel
 		{
 			StartCommand.RaiseCanExecuteChanged();
 
+			await Task.WhenAll(GetSimulationTasks().ToArray());
+
+			StartCommand.RaiseCanExecuteChanged();
+		}
+
+		private IEnumerable<Task> GetSimulationTasks()
+		{
 			var paths = _applicationModel.GetPaths().ToList();
 			for (var i = 0; i < paths.Count; i++)
 			{
-				await Robots[i].Simulate(paths[i], Points);
+				yield return Robots[i].Simulate(paths[i], Points);
 			}
-
-			StartCommand.RaiseCanExecuteChanged();
 		}
 
 		private bool CanStart()

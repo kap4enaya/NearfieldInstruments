@@ -12,17 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TestAssignment.ViewModel;
 
 namespace TestAssignment
 {
 	public class Robot : ContentControl
 	{
 		public static readonly DependencyProperty TargetProperty = DependencyProperty.Register(
-			nameof(Target), typeof(object), typeof(Robot), new PropertyMetadata(false, TargetChanged));
+			nameof(Target), typeof(StepViewModel), typeof(Robot), new PropertyMetadata(null, TargetChanged));
 
-		public object Target
+		public StepViewModel Target
 		{
-			get => GetValue(TargetProperty);
+			get => (StepViewModel)GetValue(TargetProperty);
 			set => SetValue(TargetProperty, value);
 		}
 
@@ -43,6 +44,9 @@ namespace TestAssignment
 
 		private static void TargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
+			if(((StepViewModel)e.NewValue).Duration == default(TimeSpan))
+				return;
+
 			((Robot)d).RaiseMovingEvent();
 		}
 	}
