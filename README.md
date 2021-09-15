@@ -1,6 +1,4 @@
-# NearfieldInstruments
-
-Assignment:
+# Assignment:
 
 We want to measure a set of points.
 
